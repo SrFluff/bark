@@ -1,0 +1,38 @@
+#!/bin/python3
+version = "1.0.0"
+
+import sys
+sys.argv.pop(0)
+if len(sys.argv) != 0:
+    if sys.argv[0] == "--version":
+        print(version)
+        exit()
+
+try:
+    from colorama import Fore, Back
+except Exception:
+    print("[ERROR] Colorama not found X_X")
+    exit()
+import os
+if not os.path.exists("logFile"):
+    print("No logFile, stop.")
+    exit()
+
+f = open("logFile","r")
+temp = []
+for i in f:
+    temp.append(i.strip())
+
+for i in temp:
+    if len(i) == 0:
+        pass
+    else:
+        i = i.replace(i.split()[-1],Fore.LIGHTBLACK_EX + "@ " + i.split()[-1] + Fore.RESET)
+        if i[0] == "E":
+            print(Back.RED + Fore.WHITE + "  ERROR  " + Fore.RESET + Back.RESET + " " + i[2:])
+        if i[0] == "W":
+            print(Back.YELLOW + Fore.WHITE + " WARNING " + Fore.RESET + Back.RESET + " " + i[2:])
+        if i[0] == "I":
+            print(Back.BLUE + Fore.WHITE + "  INFO   " + Fore.RESET + Back.RESET + " " + i[2:])
+        if i[0] == "D":
+            print(Back.LIGHTBLACK_EX + Fore.WHITE + "  DEBUG  " + Fore.RESET + Back.RESET + " " + i[2:])
