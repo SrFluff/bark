@@ -12,3 +12,10 @@ For version info, just run `bark --version`
 ## Info
 
 Bark depends on Colorama, a python module for colorful text.
+
+## Building
+
+Bark can be compiled to a static binary through the use of [PyInstaller](https://github.com/pyinstaller/pyinstaller).\
+For the sake of convenience Bark comes with a build script (`build.sh`) that well...builds it.\
+\
+*NOTE: `build.sh` CHECKS YOUR PYTHONPATH, MAKE SURE LIBBARK IS IN THERE, AND MAKE SURE COLORAMA IS ALSO INSTALLED.*
