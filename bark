@@ -6,17 +6,17 @@ sys.argv.pop(0)
 if len(sys.argv) != 0:
     if sys.argv[0] == "--version":
         print(version)
-        exit()
+        sys.exit()
 
 try:
     from colorama import Fore, Back
 except Exception:
     print("[ERROR] Colorama not found X_X")
-    exit()
+    sys.exit()
 import os
 if not os.path.exists("logFile"):
     print("No logFile, stop.")
-    exit()
+    sys.exit()
 
 f = open("logFile","r")
 temp = []
