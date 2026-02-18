@@ -1,7 +1,8 @@
 #!/bin/python3
-version = "1.0.0"
+version = "1.1.0"
 
 import sys
+import time
 sys.argv.pop(0)
 if len(sys.argv) != 0:
     if sys.argv[0] == "--version":
@@ -22,12 +23,12 @@ f = open("logFile","r")
 temp = []
 for i in f:
     temp.append(i.strip())
-
+delta = time.time()
 for i in temp:
     if len(i) == 0:
         pass
     else:
-        i = i.replace(i.split()[-1],Fore.LIGHTBLACK_EX + "@ " + i.split()[-1] + Fore.RESET)
+        i = i.replace(i.split()[-1],Fore.LIGHTBLACK_EX + str(round(delta - float(i.split()[-1]),2)) + " s/ago" + Fore.RESET)
         if i[0] == "E":
             print(Back.RED + Fore.WHITE + "  ERROR  " + Fore.RESET + Back.RESET + " " + i[2:])
         if i[0] == "W":
@@ -36,3 +37,5 @@ for i in temp:
             print(Back.BLUE + Fore.WHITE + "  INFO   " + Fore.RESET + Back.RESET + " " + i[2:])
         if i[0] == "D":
             print(Back.LIGHTBLACK_EX + Fore.WHITE + "  DEBUG  " + Fore.RESET + Back.RESET + " " + i[2:])
+        if i[0] == "G":
+            print(Back.GREEN + Fore.WHITE + "   OK    " + Fore.RESET + Back.RESET + " " + i[2:])
