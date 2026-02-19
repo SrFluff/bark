@@ -1,14 +1,21 @@
 #!/bin/python3
-version = "1.1.0"
+version = "1.2.0"
 
 import sys
 import time
+rock = 0
 sys.argv.pop(0)
 if len(sys.argv) != 0:
     if sys.argv[0] == "--version":
         print(version)
         sys.exit()
-
+    elif sys.argv[0] == "--help":
+        print("Usage: bark [flags]")
+        print()
+        print("Flags:")
+        print("--no-color - prints logs without color")
+        print("--version  - returns the current version")
+        sys.exit()
 try:
     from colorama import Fore, Back
 except Exception:
@@ -28,14 +35,27 @@ for i in temp:
     if len(i) == 0:
         pass
     else:
-        i = i.replace(i.split()[-1],Fore.LIGHTBLACK_EX + str(round(delta - float(i.split()[-1]),2)) + " s/ago" + Fore.RESET)
-        if i[0] == "E":
-            print(Back.RED + Fore.WHITE + "  ERROR  " + Fore.RESET + Back.RESET + " " + i[2:])
-        if i[0] == "W":
-            print(Back.YELLOW + Fore.WHITE + " WARNING " + Fore.RESET + Back.RESET + " " + i[2:])
-        if i[0] == "I":
-            print(Back.BLUE + Fore.WHITE + "  INFO   " + Fore.RESET + Back.RESET + " " + i[2:])
-        if i[0] == "D":
-            print(Back.LIGHTBLACK_EX + Fore.WHITE + "  DEBUG  " + Fore.RESET + Back.RESET + " " + i[2:])
-        if i[0] == "G":
-            print(Back.GREEN + Fore.WHITE + "   OK    " + Fore.RESET + Back.RESET + " " + i[2:])
+        if not "--no-color" in sys.argv:
+            i = i.replace(i.split()[-1],Fore.LIGHTBLACK_EX + str(round(delta - float(i.split()[-1]),2)) + " s/ago" + Fore.RESET)
+            if i[0] == "E":
+                print(Back.RED + Fore.WHITE + "  ERROR  " + Fore.RESET + Back.RESET + " " + i[2:])
+            if i[0] == "W":
+                print(Back.YELLOW + Fore.WHITE + " WARNING " + Fore.RESET + Back.RESET + " " + i[2:])
+            if i[0] == "I":
+                print(Back.BLUE + Fore.WHITE + "  INFO   " + Fore.RESET + Back.RESET + " " + i[2:])
+            if i[0] == "D":
+                print(Back.LIGHTBLACK_EX + Fore.WHITE + "  DEBUG  " + Fore.RESET + Back.RESET + " " + i[2:])
+            if i[0] == "G":
+                print(Back.GREEN + Fore.WHITE + "   OK    " + Fore.RESET + Back.RESET + " " + i[2:])
+        else:
+            i = i.replace(i.split()[-1],str(round(delta - float(i.split()[-1]),2)) + " s/ago")
+            if i[0] == "E":
+                print("[ERROR  ] " + i[2:])
+            if i[0] == "W":
+                print("[WARNING] " + i[2:])
+            if i[0] == "I":
+                print("[INFO   ] " + i[2:])
+            if i[0] == "D":
+                print("[DEBUG  ] " + i[2:])
+            if i[0] == "G":
+                print("[OK     ] " + i[2:])
